@@ -1,8 +1,7 @@
 # CommonBannerView
 Android Banner广告位控件，支持画廊和普通展示形式，可自动和手动循环轮播
 
-画廊和普通轮播效果效果
-![img](https://github.com/CoralXss/CommonBannerView/blob/master/banner.png)
+![img](https://github.com/CoralXss/CommonBannerView/blob/master/banner.jpeg)
 
 1. gradle中添加依赖（稍后提供）
 
