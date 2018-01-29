@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <declare-styleable name="BannerWrapperViewStyleable">
+        <attr name="bannerClipChildren" format="boolean" />
+        <attr name="showIndicator" format="boolean" />
+        <attr name="playAuto" format="boolean" />
+        <attr name="playLoop" format="boolean" />
+        <attr name="indicatorIcon" format="reference" />
+        <attr name="viewPageMargin" format="dimension" />
+        <attr name="viewPageHorizonMargin" format="dimension" />
+
+        <attr name="indicatorIconSelected" format="reference" />
+        <attr name="indicatorIconNormal" format="reference" />
+    </declare-styleable>
+
+</resources>

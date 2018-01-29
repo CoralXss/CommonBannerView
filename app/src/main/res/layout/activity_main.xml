@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView  xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#ffffff"
+        tools:context="com.coral.banner.example.MainActivity">
+
+        <!--
+            Tips: 这里因为设置了clipChildren=false，所以设置padding时间距会被当做子控件的一部分，
+                viewpager中的View就会显示不全，必须设置同等的paddingBottom，所以直接使用一个同等高度的View实现上间距。
+        -->
+        <com.coral.banner.BannerWrapperView
+            android:id="@+id/bannerGalleryView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            app:showIndicator="true"
+            app:playAuto="true"
+            app:playLoop="true"
+            app:viewPageMargin="8dp"
+            app:viewPageHorizonMargin="20dp"
+            app:bannerClipChildren="false"
+            app:indicatorIconSelected="@drawable/bg_banner_indicator_selected"
+            app:indicatorIconNormal="@drawable/bg_banner_indicator_normal"/>
+
+        <com.coral.banner.BannerWrapperView
+            android:id="@+id/bannerNormalView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/bannerGalleryView"
+            android:layout_marginTop="20dp"
+            app:showIndicator="true"
+            app:playAuto="true"
+            app:playLoop="true"
+            />
+
+        <!--app:indicatorIconSelected="@drawable/dot_a_light"-->
+        <!--app:indicatorIconNormal="@drawable/dot_a_dark"-->
+
+        <!--android:layout_below="@+id/bannerGalleryView"-->
+
+    </RelativeLayout>
+</ScrollView>
