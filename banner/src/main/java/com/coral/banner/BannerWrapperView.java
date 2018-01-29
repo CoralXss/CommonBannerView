@@ -31,8 +31,8 @@ public class BannerWrapperView<T> extends FrameLayout {
 
     // 是否展示指示器
     private boolean mShowIndicators = true;
-    // 指示器背景选择器(selector)
-    private Drawable indicatorDrawable;
+    // 轮播延迟时间
+    private int mPlayDelayTime;
     // 是否自动播放
     private boolean mPlayImageAuto;
     // 是否循环播放
@@ -54,8 +54,8 @@ public class BannerWrapperView<T> extends FrameLayout {
     // 是否正在轮播
     private boolean isPlaying;
 
-    private double DEFAULT_PAGER_HEIGHT_RATE = 4d;
-    private double mHeightRate = DEFAULT_PAGER_HEIGHT_RATE;
+    private float DEFAULT_PAGER_HEIGHT_RATE = 4f;
+    private float mHeightRate = DEFAULT_PAGER_HEIGHT_RATE;
 
     private Context mContext;
     private ViewPager mViewPager;
@@ -84,16 +84,15 @@ public class BannerWrapperView<T> extends FrameLayout {
     private void init(AttributeSet attrs, int defStyleAttr) {
         TypedArray ta = getContext().obtainStyledAttributes(attrs, R.styleable.BannerWrapperViewStyleable, defStyleAttr, 0);
         mShowIndicators = ta.getBoolean(R.styleable.BannerWrapperViewStyleable_showIndicator, true);
+        mPlayDelayTime = ta.getInteger(R.styleable.BannerWrapperViewStyleable_playDelayTime, DELAY_TIME);
         mPlayImageAuto = ta.getBoolean(R.styleable.BannerWrapperViewStyleable_playAuto, true);
         mPlayImageLoop = ta.getBoolean(R.styleable.BannerWrapperViewStyleable_playLoop, false);
         mBannerClipChildren = ta.getBoolean(R.styleable.BannerWrapperViewStyleable_bannerClipChildren, true);
-        indicatorDrawable = ta.getDrawable(R.styleable.BannerWrapperViewStyleable_indicatorIcon);
-
         mIndicatorIconSelected = ta.getDrawable(R.styleable.BannerWrapperViewStyleable_indicatorIconSelected);
         mIndicatorIconNormal = ta.getDrawable(R.styleable.BannerWrapperViewStyleable_indicatorIconNormal);
-
         mBannerPageMargin = ta.getDimension(R.styleable.BannerWrapperViewStyleable_viewPageMargin, 0f);
         mViewPagerHorizonMargin = ta.getDimension(R.styleable.BannerWrapperViewStyleable_viewPageHorizonMargin, 0f);
+        mHeightRate = ta.getFloat(R.styleable.BannerWrapperViewStyleable_heightRate, DEFAULT_PAGER_HEIGHT_RATE);
         ta.recycle();
 
         initView();
@@ -261,7 +260,7 @@ public class BannerWrapperView<T> extends FrameLayout {
                 ImageView iv = new ImageView(mContext);
 //                iv.setImageDrawable(getIndicatorDrawable());
 //                iv.setSelected(i == 0);
-                iv.setImageDrawable(i == 0 ? getIndicatorSelectedIcon() : getIndicatorNormalIcon());
+                iv.setImageDrawable(i == 0 ? mIndicatorIconSelected : mIndicatorIconNormal);
                 int padding = DimenUtil.dip2px(mContext, PADDING);
                 iv.setPadding(padding, padding, padding, padding);
                 mIndicators.add(iv);
@@ -271,15 +270,6 @@ public class BannerWrapperView<T> extends FrameLayout {
 
         // 设置可见性
         mIndicatorContainer.setVisibility(mShowIndicators ? VISIBLE : GONE);
-    }
-
-    // 设置指示器背景
-    private Drawable getIndicatorSelectedIcon() {
-        return mIndicatorIconSelected == null ? getResources().getDrawable(R.drawable.bg_banner_indicator_selected) : mIndicatorIconSelected;
-    }
-
-    private Drawable getIndicatorNormalIcon() {
-        return mIndicatorIconNormal == null ? getResources().getDrawable(R.drawable.bg_banner_indicator_normal) : mIndicatorIconNormal;
     }
 
     private class PageChangeListener implements ViewPager.OnPageChangeListener {
@@ -330,7 +320,7 @@ public class BannerWrapperView<T> extends FrameLayout {
         int size = mIndicators.size();
         for (int i = 0; i < size; i++) {
 //            mIndicators.get(i).setSelected(i == dotPosition);
-            mIndicators.get(i).setImageDrawable(i == dotPosition ? getIndicatorSelectedIcon() : getIndicatorNormalIcon());
+            mIndicators.get(i).setImageDrawable(i == dotPosition ? mIndicatorIconSelected : mIndicatorIconNormal);
         }
     }
 
@@ -340,13 +330,14 @@ public class BannerWrapperView<T> extends FrameLayout {
      */
     public void setShowIndicators(boolean isShow) {
         this.mShowIndicators = isShow;
+        invalidate();
     }
 
     /**
      * 设置图片宽高比例
      * @param rate
      */
-    public void setHeightRate(double rate) {
+    public void setHeightRate(float rate) {
         this.mHeightRate = rate;
         invalidate();
     }

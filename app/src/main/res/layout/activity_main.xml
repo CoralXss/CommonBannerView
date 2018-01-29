@@ -38,12 +38,8 @@
             app:showIndicator="true"
             app:playAuto="true"
             app:playLoop="true"
-            />
-
-        <!--app:indicatorIconSelected="@drawable/dot_a_light"-->
-        <!--app:indicatorIconNormal="@drawable/dot_a_dark"-->
-
-        <!--android:layout_below="@+id/bannerGalleryView"-->
+            app:indicatorIconSelected="@drawable/dot_a_light"
+            app:indicatorIconNormal="@drawable/dot_a_dark"/>
 
     </RelativeLayout>
 </ScrollView>
